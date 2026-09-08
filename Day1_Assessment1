@@ -23,7 +23,7 @@ public class Day1_Assessment1 {
 		driver.findElement(By.id("login-button")).click();
 		Thread.sleep(3000);
 		JavascriptExecutor js = (JavascriptExecutor)driver;
-		js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+		js.executeScript("window.scrollTo(0,500)");
 		Thread.sleep(2000);
 		TakesScreenshot ts = (TakesScreenshot)driver;
 		File src = ts.getScreenshotAs(OutputType.FILE);
