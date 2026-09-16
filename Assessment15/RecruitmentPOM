@@ -1,0 +1,28 @@
+package pomutilities;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class RecruitementPOM {
+			WebDriver driver2;
+	public RecruitementPOM(WebDriver driver2) {
+		this.driver2 = driver2;
+		PageFactory.initElements(driver2, this);
+	}
+	
+		// Recruitment
+		@FindBy(xpath = "//span[text()='Recruitment']")
+		private WebElement recruitment;
+		@FindBy(xpath = "//button[text()=' Add ']")
+		private WebElement addButton;
+		
+		public void getRecruitment() {
+			recruitment.click();
+		}
+		public void getAddButton() {
+			addButton.click();
+		}
+
+}
