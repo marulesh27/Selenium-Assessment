@@ -1,0 +1,26 @@
+package keywordframework;
+
+public class SauceExecution {
+SaucedemoImplementation s = new SaucedemoImplementation();
+public void executors(String keyword) {
+
+    if (keyword.equals("LAUNCH_BROWSER")) {
+        s.launchBrowser();
+    }
+    else if (keyword.equals("OPEN_URL")) {
+        s.openurl();
+    }
+    else if (keyword.equals("USER_NAME")) {
+        s.username();
+    }
+    else if (keyword.equals("PASSWORD")) {
+        s.password();
+    }
+    else if (keyword.equals("LOGIN")) {
+        s.login();
+    }
+    else if (keyword.equals("CLOSE_BROWSER")) {
+        s.closeBrowser();
+    }
+}
+}
