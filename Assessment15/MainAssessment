@@ -1,0 +1,138 @@
+package handlingpom;
+
+import java.io.FileInputStream;
+import java.time.Duration;
+import java.util.Properties;
+
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import pomutilities.LoginPOM;
+import pomutilities.LogoutPOM;
+import pomutilities.CandidatedetailsPOM;
+import pomutilities.CandidatesPOM;
+import pomutilities.RecruitementPOM;
+
+public class MainAssessment {
+
+	public static void main(String[] args) throws Exception {
+
+		// Read properties file
+		FileInputStream pfis = new FileInputStream("./src/test/resources/DDT/config.properties");
+		Properties p = new Properties();
+		p.load(pfis);
+		String browser = p.getProperty("browser");
+		String url = p.getProperty("url");
+		String username = p.getProperty("username");
+		String password = p.getProperty("password");
+
+		// Read Excel file
+		FileInputStream fis = new FileInputStream("C:\\Users\\Hp\\Downloads\\hrmapplication.xlsx");
+		Workbook workbook = WorkbookFactory.create(fis);
+		Sheet sheet = workbook.getSheet("Sheet1");
+		Row row = sheet.getRow(1);
+		String firstname = row.getCell(0).getStringCellValue();
+		String middlename = row.getCell(1).getStringCellValue();
+		String lastname = row.getCell(2).getStringCellValue();
+		String vacancy = row.getCell(3).getStringCellValue();
+		String email = row.getCell(4).getStringCellValue();
+		String resume = row.getCell(6).getStringCellValue();
+		String cand=row.getCell(11).getStringCellValue();
+		String jobTitle = row.getCell(8).getStringCellValue();
+		String hiringManager = row.getCell(9).getStringCellValue();
+		String status = row.getCell(10).getStringCellValue();
+		DataFormatter data = new DataFormatter();
+		String mobile = data.formatCellValue(row.getCell(5));
+		String applicationDate = data.formatCellValue(row.getCell(7));
+		// Launch browser
+		WebDriver driver = null;
+		if (browser.equals("chrome")) {
+			driver = new ChromeDriver();
+		}
+		if(browser.equals("edge")) {
+			driver=new EdgeDriver();
+		}
+		if(browser.equals("firefox")) {
+			driver=new FirefoxDriver();
+		}
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		// Navigate
+		driver.get(url);
+		
+		LoginPOM A = new LoginPOM(driver);
+		LogoutPOM B = new LogoutPOM(driver);
+		CandidatedetailsPOM C = new CandidatedetailsPOM(driver);
+		CandidatesPOM D = new CandidatesPOM(driver);
+		RecruitementPOM E = new RecruitementPOM(driver);
+		
+		A.getUsername(username);
+		A.getPassword(password);
+		A.getLoginButton();
+		// Recruitment
+		E.getRecruitment();
+		E.getAddButton();
+		// Enter candidate details
+		C.getFirstname(firstname);
+		C.getMiddlename(middlename);
+		C.getLastname(lastname);
+		// Select Vacancy
+		C.getVacancy();
+		C.selectVacancy(vacancy);
+		// Enter Email
+		C.getEmail(email);
+		// Enter Mobile
+		C.getMobile(mobile);
+		// Upload Resume
+		C.uploadFile(resume);
+		// Application Date
+		C.getApplicationDate(applicationDate);
+		// Save
+		C.getSave();
+		Thread.sleep(3000);
+		// Click Candidates
+		D.getCandidates();
+		// Select Job Title
+		D.getJobTitle();
+		D.selectJobTitle(jobTitle);
+		// Select Vacancy
+		D.getSearchVacancy();
+		D.selectSearchVacancy(vacancy);
+		// Select Hiring Manager
+		D.getHiringManager();
+		D.selectHiringManager(hiringManager);
+		
+		// Select Status
+		D.getStatus();
+		D.selectStatus(status);
+	
+		// Candidate Name
+		D.getCandidateName(cand);
+		// Application Date
+		D.getSearchDate(applicationDate);
+		// Search
+		D.getSearchButton();
+		// Verify Candidate
+		if (D.verifyCandidate(cand)) {
+
+			System.out.println("Candidate is successfully added");
+
+		} else {
+
+			System.out.println("Candidate is not added");
+
+		}
+
+		// Logout
+		B.getProfile();
+		B.getLogout();
+		// Close
+	}
+}
