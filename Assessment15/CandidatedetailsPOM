@@ -1,0 +1,68 @@
+package pomutilities;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class CandidatedetailsPOM {
+  WebDriver driver3;
+  public CandidatedetailsPOM(WebDriver driver3) {
+	  this.driver3 = driver3;
+		PageFactory.initElements(driver3, this);
+	}
+  
+  
+//Candidate details
+	@FindBy(name = "firstName")
+	private WebElement firstname;
+	@FindBy(name = "middleName")
+	private WebElement middlename;
+	@FindBy(name = "lastName")
+	private WebElement lastname;
+	@FindBy(xpath = "(//div[contains(@class,'oxd-select-text')])[1]")
+	private WebElement vacancy;
+	@FindBy(xpath = "//label[text()='Email']/../following-sibling::div//input")
+	private WebElement email;
+	@FindBy(xpath = "//label[text()='Contact Number']/../following-sibling::div//input")
+	private WebElement mobile;
+	@FindBy(xpath = "//input[@type='file']")
+	private WebElement uploadFile;
+	@FindBy(xpath = "//label[text()='Date of Application']/../following-sibling::div//input")
+	private WebElement applicationDate;
+	@FindBy(xpath = "//button[@type='submit']")
+	private WebElement save;
+	
+	public void getFirstname(String value) {
+		firstname.sendKeys(value);
+	}
+	public void getMiddlename(String value) {
+		middlename.sendKeys(value);
+	}
+	public void getLastname(String value) {
+		lastname.sendKeys(value);
+	}
+	public void getVacancy() {
+		vacancy.click();
+	}
+	public void selectVacancy(String value) {
+		driver3.findElement(By.xpath("//span[text()='" + value + "']")).click();
+	}
+	public void getEmail(String value) {
+		email.sendKeys(value);
+	}
+	public void getMobile(String value) {
+		mobile.sendKeys(value);
+	}
+	public void uploadFile(String path) {
+		uploadFile.sendKeys(path);
+	}
+	public void getApplicationDate(String value) {
+		applicationDate.click();
+	}
+	public void getSave() throws Exception{
+		Thread.sleep(5000);
+		save.click();
+	}
+}
