@@ -1,0 +1,34 @@
+package pomutilities;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class LoginPOM {
+	WebDriver driver;
+	public LoginPOM(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+	}
+	// Login
+	@FindBy(name = "username")
+	private WebElement username;
+	@FindBy(name = "password")
+	private WebElement password;
+	@FindBy(xpath = "//button[@type='submit']")
+	private WebElement loginButton;
+	
+	
+	// Methods
+	public void getUsername(String value) {
+		username.sendKeys(value);
+	}
+	public void getPassword(String value) {
+		password.sendKeys(value);
+	}
+	public void getLoginButton() {
+		loginButton.click();
+	}
+	
+	}
