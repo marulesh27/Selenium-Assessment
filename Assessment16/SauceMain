@@ -1,0 +1,19 @@
+package KreywordFrameworkImplemenatation;
+
+import keywordframework.SauceExecution;
+
+public class SauceDemo {
+	public static void main(String[] args) throws InterruptedException {
+
+		SauceExecution e= new SauceExecution();
+
+		e.executors("LAUNCH_BROWSER");
+		e.executors("OPEN_URL");
+		e.executors("USER_NAME");
+		e.executors("PASSWORD");
+		e.executors("LOGIN");
+		Thread.sleep(3000);
+		e.executors("CLOSE_BROWSER");
+		}
+}
+
