@@ -1,0 +1,62 @@
+package HandlingAnnotations;
+
+import java.io.FileInputStream;
+
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.testng.annotations.Test;
+
+import BaseClassUtility.BaseSauceClass;
+import pomutilities.SauceCartPOM;
+import pomutilities.SauceCheckoutPOM;
+//import pomutilities.SauceDemoPOM;
+import pomutilities.SauceProductsPOM;
+
+public class Assessment17 extends BaseSauceClass {
+
+    @Test
+    public void loginTest() throws Exception {
+        System.out.println("login");
+
+    }
+
+    @Test(dependsOnMethods = "loginTest")
+    public void orderPlacementTest() throws Exception {
+        SauceProductsPOM product = new SauceProductsPOM(driver);
+        product.verifyProductsPage();
+        product.addBackpackToCart();
+        product.getCartCount();
+        product.clickCart();
+
+       SauceCartPOM cart = new SauceCartPOM(driver);
+        cart.verifyBackpack();
+        cart.clickCheckout();
+        SauceCheckoutPOM checkout = new SauceCheckoutPOM(driver);
+        String firstName = getExcelData(1, 0);
+        String lastName = getExcelData(1, 1);
+        String postalCode = getExcelData(1, 2);
+        checkout.enterFirstName(firstName);
+        checkout.enterLastName(lastName);
+        checkout.enterPostalCode(postalCode);
+        checkout.clickContinue();
+        System.out.println(checkout.verifyCheckoutOverview());
+        checkout.clickFinish();
+        System.out.println(checkout.getThankYouMessage());
+        System.out.println("Before test execution");
+        System.out.println("order placed");
+    }
+
+   public String getExcelData(int rowNum, int cellNum) throws Exception {
+        FileInputStream fis = new FileInputStream("C:\\Users\\Hp\\Downloads\\SauceCheckout.xlsx");
+        Workbook wb = WorkbookFactory.create(fis);
+        Sheet sh = wb.getSheet("Sheet1");
+        DataFormatter formatter = new DataFormatter();
+        String data = formatter.formatCellValue(sh.getRow(rowNum).getCell(cellNum));
+        wb.close();
+        fis.close();
+        return data;
+   }
+
+}
