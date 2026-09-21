@@ -1,0 +1,45 @@
+package testscript;
+
+import java.io.FileInputStream;
+
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.testng.annotations.Test;
+
+import BaseClassUtility.BaseOrange;
+import pomutilities.OrangeVacanciesPOM;
+
+public class Assessment18 extends BaseOrange {
+    @Test
+    public void createVacancy() throws Exception {
+        FileInputStream fis = new FileInputStream("./src/test/resources/DDT/orangehrm1.xlsx");
+        Workbook wb = WorkbookFactory.create(fis);
+        Sheet sh = wb.getSheet("Sheet2");
+        Row row = sh.getRow(1);
+        DataFormatter data = new DataFormatter();
+        String vacancyName = data.formatCellValue(row.getCell(1));
+        String jobTitle = data.formatCellValue(row.getCell(0));
+        String description = data.formatCellValue(row.getCell(2));
+        String hiringManager = data.formatCellValue(row.getCell(3));
+        String positions = data.formatCellValue(row.getCell(4));
+
+        OrangeVacanciesPOM vacancy = new OrangeVacanciesPOM(driver);
+        vacancy.getRecruitment();
+        vacancy.getVacancies();
+        vacancy.getAddButton();
+        vacancy.getVacancyName(vacancyName);
+        vacancy.getJobTitle();
+        vacancy.selectJobTitle(jobTitle);
+        vacancy.getDescription(description);
+        vacancy.getHiringManager(hiringManager);
+        vacancy.selectHiringManager(hiringManager);
+        vacancy.getNumberOfPositions(positions);
+        vacancy.getSave();
+        System.out.println("TC1 - Vacancy created successfully");
+        wb.close();
+        fis.close();
+   }
+}
