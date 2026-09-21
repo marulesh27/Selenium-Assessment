@@ -1,0 +1,51 @@
+package testscript;
+
+import java.io.FileInputStream;
+
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.testng.annotations.Test;
+
+import BaseClassUtility.BaseOrange;
+import pomutilities.OrangeMyInfoPOM;
+
+public class Assessment19 extends BaseOrange {
+    @Test
+    public void updateMyInfo() throws Exception {
+        FileInputStream fis = new FileInputStream("./src/test/resources/DDT/orangehrm1.xlsx");
+        Workbook wb = WorkbookFactory.create(fis);
+        Sheet sh = wb.getSheet("Sheet3");
+        Row row = sh.getRow(1);
+        DataFormatter data = new DataFormatter();
+        String firstName = data.formatCellValue(row.getCell(0));
+        String lastName = data.formatCellValue(row.getCell(1));
+        String employeeId = data.formatCellValue(row.getCell(2));
+        OrangeMyInfoPOM myInfo = new OrangeMyInfoPOM(driver);
+        myInfo.getMyInfo();
+        myInfo.getFirstName(firstName);
+        myInfo.getLastName(lastName);
+        myInfo.getEmployeeId(employeeId);
+        myInfo.getSave();
+        String actualFirstName = myInfo.verifyFirstName();
+        String actualLastName = myInfo.verifyLastName();
+        String actualEmployeeId = myInfo.verifyEmployeeId();
+        if (firstName.equals(actualFirstName)) {
+            System.out.println("First Name verified successfully");
+        } else {
+            System.out.println("First Name verification failed");
+        }
+        if (lastName.equals(actualLastName)) {
+            System.out.println("Last Name verified successfully");
+        } else {
+            System.out.println("Last Name verification failed");
+        }
+        if (employeeId.equals(actualEmployeeId)) {
+            System.out.println("Employee ID verified successfully");
+        } else {
+            System.out.println("Employee ID verification failed");
+        }
+   }
+}
