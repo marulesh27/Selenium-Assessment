@@ -1,0 +1,64 @@
+package pomutilities;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class OrangeMyInfoPOM {
+    WebDriver driver;
+    public OrangeMyInfoPOM(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+   }
+
+    @FindBy(xpath = "//span[text()='My Info']")
+    private WebElement myInfo;
+
+    @FindBy(xpath = "//input[@name='firstName']")
+    private WebElement firstName;
+
+    @FindBy(xpath = "//input[@name='lastName']")
+    private WebElement lastName;
+
+    @FindBy(xpath = "//label[text()='Employee Id']/../following-sibling::div//input")
+    private WebElement employeeId;
+
+    @FindBy(xpath = "//button[normalize-space()='Save']")
+    private WebElement save;
+
+    public String verifyFirstName() {
+
+        return firstName.getAttribute("value");
+
+    }
+
+    public String verifyLastName() {
+
+        return lastName.getAttribute("value");
+
+    }
+
+    public String verifyEmployeeId() {
+        return employeeId.getAttribute("value");
+    }
+    public void getMyInfo() {
+        myInfo.click();
+    }
+    public void getFirstName(String value) {
+        firstName.clear();
+        firstName.sendKeys(value);
+    }
+    public void getLastName(String value) {
+        lastName.clear();
+        lastName.sendKeys(value);
+    }
+    public void getEmployeeId(String value) {
+        employeeId.clear();
+        employeeId.sendKeys(value);
+   }
+    public void getSave() {
+        save.click();
+    }
+
+}
