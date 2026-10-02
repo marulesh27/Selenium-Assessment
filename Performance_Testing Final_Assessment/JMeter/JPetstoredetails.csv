@@ -1,0 +1,5 @@
+﻿User_Id,Password,confirm_Password,FirstName,LastName,Email,Phone,Address1,Address2,City,State,Zip,Country,Language,Categoryid,CardType,Creditcard,Creditexp
+101,qwerty,qwerty,A,Asdf,asd,989878979,bay,bay,Ballari,Karnataka,583102,india,english,dogs,visa,8.69E+09,16-Nov
+102,asdfgh,asdfgh,B,Nmbv,nmb,977878718,hub,hub,hubli,Karnataka,315662,india,english,cats,rupay,7.58E+08,04-Aug
+103,qazxsw,qazxsw,C,Vbnm,vbm,387736468,dwd,dwd,dharwad,Karnataka,576888,india,english,fish,amex,7489368846,11-Jun
+104,zxcvbn,zxcvbn,D,Fghj,fgh,857834953,smg,smg,shimoga,Karnataka,453672,india,english,birds,credit,4789377453,19-Dec
